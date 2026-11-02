@@ -5,8 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/imermigkas3/scheduler/internal/crawler"
 ) 
 func main() {
+	client := &http.Client{Timeout: 30 * time.Second}
+	data, err := crawler.FetchCourses(client, 0)
 	mux := http.NewServeMux()
 
 	// if the function takes an interface then you can pass either a value that implemnets that or a pointer to a value taht implments that
