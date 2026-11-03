@@ -12,6 +12,15 @@ import (
 func main() {
 	client := &http.Client{Timeout: 30 * time.Second}
 	data, err := crawler.FetchCourses(client, 0)
+	if err != nil {
+		log.Fatalf("fetching courses:%v", err)	
+	}
+	log.Printf("Courses fetched: %v", data.TotalCount)
+	log.Printf("Courses on this page: %v", len(data.Data))
+	if len(data.Data) > 0 {
+		first := data.Data[0]
+		log.Println("First course:", first.Subject, first.CourseNumber, first.CourseTitle)
+	}
 	mux := http.NewServeMux()
 
 	// if the function takes an interface then you can pass either a value that implemnets that or a pointer to a value taht implments that
